@@ -8,60 +8,26 @@ import {
   WrapperButtonStyle
 } from './style'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 
 const SignUpPage = () => {
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
-
-  // 2. THÊM STATE CHO CÁC TRƯỜNG
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
-  const [firstName, setFirstName] = useState('')
-  const [lastName, setLastName] = useState('')
 
   const handleNavigateSignIn = () => {
     navigate('/sign-in')
   }
 
-  // 3. HÀM GỌI API
-  const handleSignUp = async () => {
-    // Kiểm tra mật khẩu khớp
+  const handleSignUp = () => {
     if (password !== confirmPassword) {
       alert('Mật khẩu không khớp!')
       return
     }
-    // Kiểm tra các trường khác
-    if (!firstName || !lastName || !email || !password) {
-      alert('Vui lòng nhập đầy đủ thông tin')
-      return
-    }
-
-    try {
-      // Gọi API backend
-      const response = await axios.post(
-        'http://localhost:8080/api/register', // <-- Link API backend
-        {
-          firstName,
-          lastName,
-          email,
-          password
-        }
-      )
-
-      // Xử lý thành công
-      if (response.status === 201) {
-        alert('Đăng ký thành công! Bạn sẽ được chuyển đến trang đăng nhập.')
-        navigate('/sign-in')
-      }
-
-    } catch (error) {
-      // Xử lý lỗi (ví dụ: email đã tồn tại)
-      console.error('Lỗi đăng ký:', error)
-      alert(error.response?.data?.message || 'Đã có lỗi xảy ra. Vui lòng thử lại.')
-    }
+    console.log('Đăng ký:', { email, password, confirmPassword })
+    // Xử lý logic đăng ký
   }
 
   return (
@@ -74,8 +40,7 @@ const SignUpPage = () => {
     }}>
       <div style={{ 
         width: '800px', 
-        height: 'auto',
-        padding: '20px 0',
+        height: '500px', 
         borderRadius: '6px', 
         backgroundColor: '#fff',
         display: 'flex',
@@ -84,22 +49,6 @@ const SignUpPage = () => {
         <WrapperContainerLeft>
           <h1>Xin chào</h1>
           <p>Đăng ký tài khoản mới</p>
-
-          {/* 4. Ô INPUT CHO HỌ VÀ TÊN */}
-          <div style={{ display: 'flex', gap: '10px' }}>
-            <WrapperInputStyle 
-              placeholder="Họ (Last Name)" 
-              value={lastName}
-              onChange={(e) => setLastName(e.target.value)}
-              style={{ width: '100%' }}
-            />
-            <WrapperInputStyle 
-              placeholder="Tên (First Name)" 
-              value={firstName}
-              onChange={(e) => setFirstName(e.target.value)}
-              style={{ width: '100%' }}
-            />
-          </div>
 
           <WrapperInputStyle 
             placeholder="abc@gmail.com" 
@@ -150,8 +99,7 @@ const SignUpPage = () => {
           </div>
 
           <WrapperButtonStyle
-            // Cập nhật điều kiện disabled
-            disabled={!email.length || !password.length || !confirmPassword.length || !firstName.length || !lastName.length}
+            disabled={!email.length || !password.length || !confirmPassword.length}
             onClick={handleSignUp}
           >
             Đăng ký
@@ -164,6 +112,7 @@ const SignUpPage = () => {
         </WrapperContainerLeft>
 
         <WrapperContainerRight>
+          {/* Logo SVG */}
           <div style={{
             width: '203px',
             height: '203px',

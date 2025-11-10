@@ -8,7 +8,6 @@ import {
   WrapperButtonStyle
 } from './style'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
 
 const SignInPage = () => {
   const navigate = useNavigate()
@@ -20,33 +19,9 @@ const SignInPage = () => {
     navigate('/sign-up')
   }
 
-  const handleSignIn = async () => {
-    if (!email || !password) {
-      alert('Vui lòng nhập email và mật khẩu')
-      return
-    }
-
-    try {
-      const response = await axios.post(
-        'http://localhost:8080/api/login', 
-        {
-          email,
-          password
-        }
-      )
-
-      if (response.data && response.data.user) {
-        alert('Đăng nhập thành công!')
-        localStorage.setItem('user', JSON.stringify(response.data.user))
-        navigate('/')
-      } else {
-        alert('Lỗi đăng nhập: Không nhận được dữ liệu người dùng.')
-      }
-
-    } catch (error) {
-      console.error('Lỗi đăng nhập:', error)
-      alert(error.response?.data?.message || 'Có lỗi xảy ra, vui lòng thử lại.')
-    }
+  const handleSignIn = () => {
+    console.log('Đăng nhập:', { email, password })
+    // Xử lý logic đăng nhập
   }
 
   return (
@@ -114,6 +89,7 @@ const SignInPage = () => {
         </WrapperContainerLeft>
 
         <WrapperContainerRight>
+          {/* Logo SVG */}
           <div style={{
             width: '203px',
             height: '203px',

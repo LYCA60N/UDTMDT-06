@@ -1,3 +1,16 @@
+chạy dự án: npm start
+
+đường dẫn trang public user như cũ
+
+đường dẫn trang admin: 
+
++ http://localhost:3000/admin/ (trang dashborad)
+
++ http://localhost:3000/admin/login (trang login)
+
+đã tắt protected các trang admin ở file admin_pages/routes/index.js thay đổi element đầu tiên thành protectedroure để ràng buộc đăng nhập
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
